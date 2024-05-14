@@ -35,6 +35,20 @@ CREATE TABLE reposta_aberta (
     data_da_reposta DATETIME,
 )
 
+CREATE TABLE questao_item (
+    id_questao_item int,
+    id_questao int, 
+    descricao_questao_item VARCHAR(MAX),
+    eh_correta bit,
+)
+
+CREATE TABLE resposta_fechada (
+    id_avaliacao int,
+    id_aluno int,
+    id_questao_item int,
+    data_da_resoista DATETIME,
+)
+
 /* Comando */
 ALTER TABLE aluno add constraint pk_aluno PRIMARY KEY (id_aluno)
 /* Comando */
@@ -46,6 +60,17 @@ ALTER TABLE questao add constraint pk_id_questao PRIMARY KEY (id_questao)
 /* Comando */
 ALTER TABLE questao add constraint fk_id_avaliacao FOREIGN KEY (id_avaliacao) REFERENCES (id_avaliacao)
 /* Comando */
-ALTER TABLE resposta_aberta add constraint fk_questao__resposta_aberta FOREIGN KEY (id_avaliacao, id_aluno) REFERENCES (id_avaliacao, id_aluno)
+ALTER TABLE resposta_aberta add constraint fk_questao__resposta_aberta FOREIGN KEY (id_avaliacao, id_aluno) REFERENCES avaliacao_aluno (id_avaliacao, id_aluno)
 /* Comando */
-ALTER TABLE resposta_aberta add constraint fk_questao__aberta FOREIGN KEY (id_questao)  
+ALTER TABLE resposta_aberta add constraint fk_questao__aberta FOREIGN KEY (id_questao) REFERENCES questao (id_questao)
+/* Comando */
+ALTER TABLE resposta_aberta add constraint pk_id_avaliacao__resposta_aberta PRIMARY KEY (id_avaliacao)
+/* Comando */
+ALTER TABLE reposta_aberta add constraint pk_id_aluno__resposta_aberta PRIMARY KEY (id_aluno)
+/* Comando */
+ALTER TABLE resposta_aberta add constraint pk_id_questao__resposta_aberta PRIMARY KEY (id_questao)
+/* Comando */
+ALTER TABLE questao_item add constraint pk_id_questao_item__questao_item PRIMARY KEY (id_questao_item)
+/* Comando */
+ALTER TABLE questao_item add constraint fk_id_questao__questao FOREIGN KEY (id_questao) REFERENCES questao (id_questao)
+/* Comando */
